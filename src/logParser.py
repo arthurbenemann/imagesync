@@ -38,4 +38,5 @@ def parseLogLines(gpsLine, attLine):
     # Convert GPS time to UTC
     year, month, day, hh, mm, ss = gpstime.UTCFromGps(gpsWeek, SOW)
     time = gpstime.mkUTC(year, month, day, hh, mm, ss)  
-    return time, Lat, Lng, Alt, Roll, Pitch, Yaw 
+    #return time, Lng, Lat, Alt, Yaw, Pitch, Roll 
+    return time, Lng, Lat, Alt

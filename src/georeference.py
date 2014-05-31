@@ -19,8 +19,8 @@ def calcOffset(images, locations):
     lastImage = images[len(images) - 1][1]
     minOffset = float(firstLocation) - float(firstImage)
     maxOffset = float(lastLocation) - float(lastImage)
-    print ('\n### OFFSET')
-    print ('first LOG - ' + time.ctime(firstLocation) + '\tIMAGE - ' + time.ctime(firstImage))
+    #print ('\n### OFFSET')
+    #print ('first LOG - ' + time.ctime(firstLocation) + '\tIMAGE - ' + time.ctime(firstImage))
     print ('offset should be between %1.1f and %1.1f' % (minOffset, maxOffset))
     offset = (maxOffset + minOffset) / 2.0
     return offset

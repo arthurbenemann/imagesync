@@ -1,0 +1,5 @@
+PhotoScan.app.document.activeChunk.cameras
+
+PhotoScan.app.document.activeChunk.ground_control.load('/home/arthur/bigMap/images/102___05/georeference.txt','csv')
+
+PhotoScan.app.document.activeChunk.ground_control.apply()

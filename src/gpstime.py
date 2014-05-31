@@ -74,7 +74,7 @@ def julianDay(year, month, day):
 def mkUTC(year, month, day, hour, min, sec):
     "similar to python's mktime but for utc"
     fracSec = sec- math.trunc(sec)
-    spec = [year, month, day, hour, min, int(sec)] + [0, 0, 0]
+    spec = (year, month, day, hour, min, int(sec),0, 0, 0)
     timeFromEpoch = time.mktime(spec)
     utc = timeFromEpoch - time.timezone + fracSec
     return utc
