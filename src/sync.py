@@ -13,8 +13,7 @@ def sync(logPath, offset):
     locations = parseLog(log)
                 
     if offset is None:
-        calcOffset(images, locations)
-        return    
+        return calcOffset(images, locations)   
     
     georef = geoReference(images, locations, offset)
     
@@ -23,6 +22,6 @@ def sync(logPath, offset):
     for ref in georef:
         output.write(str(ref).replace('[', '').replace(']', '').replace(',', '').replace("'", '').replace(' ', '\t')+'\n')
             
-    
+    output.flush()
     print('Sync: ' + log.name)
     print('Finished: %d locations, %d images, %d matches (using offset of %1.1f)' % (len(locations), len(images),len(georef),offset))

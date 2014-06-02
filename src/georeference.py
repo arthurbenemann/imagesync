@@ -21,9 +21,7 @@ def calcOffset(images, locations):
     maxOffset = float(lastLocation) - float(lastImage)
     #print ('\n### OFFSET')
     #print ('first LOG - ' + time.ctime(firstLocation) + '\tIMAGE - ' + time.ctime(firstImage))
-    print ('offset should be between %1.1f and %1.1f' % (minOffset, maxOffset))
-    offset = (maxOffset + minOffset) / 2.0
-    return offset
+    return ('Offset should be between %1.1f and %1.1f' % (minOffset, maxOffset))
 
 def searchLocation(locations, x):
     index = bisect.bisect_left(column(locations, 0), x)
