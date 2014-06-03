@@ -1,27 +1,25 @@
 import os.path
+import georeference 
+import imageParser 
+import logParser 
 
-from imageParser import findImages
-from logParser import parseLog
-from georeference import calcOffset, geoReference
 
-
-def sync(logPath, offset):
+def sync(logPath,imagesPath, offset):
     log = open(logPath, 'r')
-    path = os.path.dirname(log.name)
-    
-    images = findImages(path)
-    locations = parseLog(log)
+        
+    images = imageParser.findImages(imagesPath)
+    locations = logParser.parseLog(log)
                 
     if offset is None:
-        return calcOffset(images, locations)   
+        return georeference.calcOffset(images, locations)   
     
-    georef = geoReference(images, locations, offset)
+    georef = georeference.geoReference(images, locations, offset)
     
-    output = open(path+'/georeference.txt','w')
+    output = open(imagesPath+'/georeference.txt','w')
     output.write('Name Lng Lat Alt Yaw Pitch Roll\n') 
     for ref in georef:
         output.write(str(ref).replace('[', '').replace(']', '').replace(',', '').replace("'", '').replace(' ', '\t')+'\n')
             
     output.flush()
-    print('Sync: ' + log.name)
-    print('Finished: %d locations, %d images, %d matches (using offset of %1.1f)' % (len(locations), len(images),len(georef),offset))
+    #print('Sync: ' + log.name)
+    #print('Finished: %d locations, %d images, %d matches (using offset of %1.1f)' % (len(locations), len(images),len(georef),offset))
