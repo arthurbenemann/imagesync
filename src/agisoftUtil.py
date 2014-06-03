@@ -5,8 +5,11 @@ def getProjectPath():
     path, name = os.path.split(PhotoScan.app.document.path)  # @UnusedVariable
     return path
 
-def getLogPath():
-    return getProjectPath() +'/logs/log.log'
+def getLogPath(): # Search for first .log file in /logs/
+    logPath = getProjectPath() + '/logs/'
+    for fileInLogs in os.listdir(logPath):
+        if fileInLogs.endswith(".log"):
+            return (logPath + fileInLogs)
 
 def getImagesPath():
     return getProjectPath() +'/images/'
