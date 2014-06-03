@@ -3,8 +3,6 @@ import sync
 import os
 import sys
 import agisoftUtil
-
-
  
 def askUserForLogFile():
     return PhotoScan.app.getOpenFileName('ArduPilot Flight log (.log)')
@@ -18,11 +16,14 @@ def estimateOffset():
     print('\nMin: '+ str(minOff)+'\tMax: '+str(maxOff))
     
     offset = minOff
-    step = PhotoScan.app.getFloat('Offset serach step size (s)',1)
+    interval = maxOff - minOff
+    step = interval/PhotoScan.app.getInt('Get number of steps for the offset search (%2.0fs interval)'%(int(interval)),50)
     while offset<maxOff:
         sync.sync(logPath, imagesPath,offset)    
         agisoftUtil.applyGeoreference(imagesPath)    
-        print('offset:{:8.1f} \terror: {:8.2f}'.format(offset,agisoftUtil.getTotalError()))
+        error = agisoftUtil.getTotalError()
+        print('offset:{:8.1f}s \terror: {:8.2f}m'.format(offset,error)+' - '+'|'*int(error*3))
+        PhotoScan.app.update()
         offset = offset +step;
     
     
@@ -35,6 +36,5 @@ def syncImages():
 # get argument list using sys module
 PhotoScan.app.addMenuItem('EstimateOffset',estimateOffset, shortcut = 'e')
 PhotoScan.app.addMenuItem('SyncImages',syncImages, shortcut = 's')
-PhotoScan.app.addMenuItem('GetError',agisoftUtil.getTotalError, shortcut = 'r')
 
 
