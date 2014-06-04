@@ -15,14 +15,20 @@ def estimateOffset():
     minOff,maxOff = sync.sync(logPath,imagesPath,None)
     print('\nMin: '+ str(minOff)+'\tMax: '+str(maxOff))
     
-    offset = minOff
+    
+    minOff = PhotoScan.app.getFloat('Min. offset (s):',minOff)
+    maxOff = PhotoScan.app.getFloat('Max. offset (s):',maxOff)
+        
     interval = maxOff - minOff
     step = interval/PhotoScan.app.getInt('Get number of steps for the offset search (%2.0fs interval)'%(int(interval)),50)
+    
+    # Run iteration
+    offset = minOff
     while offset<maxOff:
         sync.sync(logPath, imagesPath,offset)    
         agisoftUtil.applyGeoreference(imagesPath)    
         error = agisoftUtil.getTotalError()
-        print('offset:{:8.1f}s \terror: {:8.2f}m'.format(offset,error)+' - '+'|'*int(error*3))
+        print('offset:{:8.1f}s \terror: {:8.2f}m'.format(offset,error)+' - '+'|'*int(error/2))
         PhotoScan.app.update()
         offset = offset +step;
     
